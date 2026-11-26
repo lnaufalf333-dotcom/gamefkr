@@ -2,7 +2,11 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#060610" />
   <title>SwordQuest — Petualangan Epik</title>
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -16,6 +20,7 @@
       <p class="game-subtitle">Petualangan Epik Sang Pahlawan</p>
       <div class="menu-buttons">
         <button class="btn-menu" id="btn-play">▶ Mulai Petualangan</button>
+        <button class="btn-menu" id="btn-levels">🗺️ Pilih Level</button>
         <button class="btn-menu" id="btn-howto">❓ Cara Bermain</button>
         <button class="btn-menu" id="btn-credits">🌟 Credits</button>
       </div>
@@ -24,6 +29,17 @@
       </div>
     </div>
     <div class="floating-particles" id="particles"></div>
+  </div>
+
+  <!-- ===== LAYAR PILIH LEVEL ===== -->
+  <div id="screen-levels" class="screen">
+    <div class="menu-bg"></div>
+    <div class="levels-content">
+      <h2>🗺️ Pilih Level</h2>
+      <p class="levels-sub">Pilih level yang sudah terbuka untuk dimainkan</p>
+      <div class="levels-grid" id="levels-grid"></div>
+      <button class="btn-menu" id="btn-back-levels">◀ Kembali</button>
+    </div>
   </div>
 
   <!-- ===== LAYAR CARA BERMAIN ===== -->
@@ -39,6 +55,10 @@
         <div class="control-item">
           <span class="key">↑ / W / SPACE</span>
           <span class="desc">Lompat (tekan 2× untuk double jump)</span>
+        </div>
+        <div class="control-item">
+          <span class="key">↓ / S</span>
+          <span class="desc">Jongkok (lewat bawah platform)</span>
         </div>
         <div class="control-item">
           <span class="key">Z / J</span>
@@ -136,6 +156,7 @@
           <span class="hud-label">EXP</span>
           <div class="bar-bg"><div id="exp-bar" class="bar exp-fill"></div></div>
         </div>
+        <button id="btn-fullscreen" class="btn-pause" title="Layar Penuh / Landscape">⛶</button>
         <button id="btn-pause" class="btn-pause">⏸</button>
       </div>
     </div>
@@ -166,6 +187,7 @@
       <div class="mc-left">
         <button class="mc-btn" id="mc-left">◀</button>
         <button class="mc-btn" id="mc-right">▶</button>
+        <button class="mc-btn" id="mc-crouch">↓</button>
       </div>
       <div class="mc-right">
         <button class="mc-btn mc-action" id="mc-jump">↑</button>
