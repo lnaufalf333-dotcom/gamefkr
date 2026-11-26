@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SwordQuest — Petualangan Epik</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== LAYAR MENU UTAMA ===== -->
+  <div id="screen-menu" class="screen active">
+    <div class="menu-bg"></div>
+    <div class="menu-content">
+      <h1 class="game-title">⚔️ SwordQuest</h1>
+      <p class="game-subtitle">Petualangan Epik Sang Pahlawan</p>
+      <div class="menu-buttons">
+        <button class="btn-menu" id="btn-play">▶ Mulai Petualangan</button>
+        <button class="btn-menu" id="btn-howto">❓ Cara Bermain</button>
+        <button class="btn-menu" id="btn-credits">🌟 Credits</button>
+      </div>
+      <div class="menu-footer">
+        <span>HTML · CSS · JavaScript</span>
+      </div>
+    </div>
+    <div class="floating-particles" id="particles"></div>
+  </div>
+
+  <!-- ===== LAYAR CARA BERMAIN ===== -->
+  <div id="screen-howto" class="screen">
+    <div class="menu-bg"></div>
+    <div class="howto-content">
+      <h2>📖 Cara Bermain</h2>
+      <div class="controls-grid">
+        <div class="control-item">
+          <span class="key">← →</span>
+          <span class="desc">Gerak kiri / kanan</span>
+        </div>
+        <div class="control-item">
+          <span class="key">↑ / W / SPACE</span>
+          <span class="desc">Lompat (tekan 2× untuk double jump)</span>
+        </div>
+        <div class="control-item">
+          <span class="key">Z / J</span>
+          <span class="desc">Serang pedang</span>
+        </div>
+        <div class="control-item">
+          <span class="key">X / K</span>
+          <span class="desc">Lempar sihir api</span>
+        </div>
+        <div class="control-item">
+          <span class="key">C / L</span>
+          <span class="desc">Tameng / Blok</span>
+        </div>
+        <div class="control-item">
+          <span class="key">P / ESC</span>
+          <span class="desc">Pause / Resume</span>
+        </div>
+      </div>
+      <div class="tips-box">
+        <h3>💡 Tips</h3>
+        <ul>
+          <li>Kumpulkan koin 🪙 untuk menambah skor</li>
+          <li>Ambil potion ❤️ untuk memulihkan HP</li>
+          <li>Ambil sihir 💎 untuk mengisi mana</li>
+          <li>Kalahkan semua musuh untuk membuka pintu berikutnya</li>
+          <li>Boss muncul di akhir setiap world</li>
+        </ul>
+      </div>
+      <button class="btn-menu" id="btn-back-howto">◀ Kembali</button>
+    </div>
+  </div>
+
+  <!-- ===== LAYAR CREDITS ===== -->
+  <div id="screen-credits" class="screen">
+    <div class="menu-bg"></div>
+    <div class="credits-content">
+      <h2>🌟 Credits</h2>
+      <div class="credit-list">
+        <div class="credit-item">
+          <span class="credit-role">Game Developer</span>
+          <span class="credit-name">Fikri Game Studio</span>
+        </div>
+        <div class="credit-item">
+          <span class="credit-role">Engine</span>
+          <span class="credit-name">Vanilla JavaScript (ES6+)</span>
+        </div>
+        <div class="credit-item">
+          <span class="credit-role">Rendering</span>
+          <span class="credit-name">HTML5 Canvas 2D API</span>
+        </div>
+        <div class="credit-item">
+          <span class="credit-role">UI / Styling</span>
+          <span class="credit-name">Pure CSS3</span>
+        </div>
+        <div class="credit-item">
+          <span class="credit-role">Inspirasi</span>
+          <span class="credit-name">Swordigo by Touch Foo</span>
+        </div>
+        <div class="credit-item">
+          <span class="credit-role">Tahun</span>
+          <span class="credit-name">2026</span>
+        </div>
+      </div>
+      <button class="btn-menu" id="btn-back-credits">◀ Kembali</button>
+    </div>
+  </div>
+
+  <!-- ===== LAYAR GAME ===== -->
+  <div id="screen-game" class="screen">
+    <!-- HUD atas -->
+    <div id="hud">
+      <div class="hud-left">
+        <div class="hud-name">⚔️ SwordQuest</div>
+        <div class="hud-hp">
+          <span class="hud-label">HP</span>
+          <div class="bar-bg"><div id="hp-bar" class="bar hp-fill"></div></div>
+          <span id="hp-text" class="hud-val">100/100</span>
+        </div>
+        <div class="hud-mp">
+          <span class="hud-label">MP</span>
+          <div class="bar-bg"><div id="mp-bar" class="bar mp-fill"></div></div>
+          <span id="mp-text" class="hud-val">60/60</span>
+        </div>
+      </div>
+      <div class="hud-center">
+        <span class="hud-label">Level</span>
+        <span id="hud-level" class="hud-big">1</span>
+        <span class="hud-sep">|</span>
+        <span class="hud-label">Skor</span>
+        <span id="hud-score" class="hud-big">0</span>
+      </div>
+      <div class="hud-right">
+        <div class="hud-coins">🪙 <span id="hud-coins">0</span></div>
+        <div class="hud-exp">
+          <span class="hud-label">EXP</span>
+          <div class="bar-bg"><div id="exp-bar" class="bar exp-fill"></div></div>
+        </div>
+        <button id="btn-pause" class="btn-pause">⏸</button>
+      </div>
+    </div>
+
+    <!-- Canvas utama -->
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- Skill bar bawah -->
+    <div id="skill-bar">
+      <div class="skill-slot" title="Pedang [Z/J]">
+        <div class="skill-icon sword-icon">⚔️</div>
+        <span class="skill-key">Z</span>
+      </div>
+      <div class="skill-slot" title="Sihir Api [X/K]">
+        <div class="skill-icon magic-icon">🔥</div>
+        <span class="skill-key">X</span>
+        <div class="skill-cd" id="cd-magic"></div>
+      </div>
+      <div class="skill-slot" title="Tameng [C/L]">
+        <div class="skill-icon shield-icon">🛡️</div>
+        <span class="skill-key">C</span>
+        <div class="skill-cd" id="cd-shield"></div>
+      </div>
+    </div>
+
+    <!-- Mobile controls -->
+    <div id="mobile-controls">
+      <div class="mc-left">
+        <button class="mc-btn" id="mc-left">◀</button>
+        <button class="mc-btn" id="mc-right">▶</button>
+      </div>
+      <div class="mc-right">
+        <button class="mc-btn mc-action" id="mc-jump">↑</button>
+        <button class="mc-btn mc-action red" id="mc-attack">⚔️</button>
+        <button class="mc-btn mc-action blue" id="mc-magic">🔥</button>
+        <button class="mc-btn mc-action yellow" id="mc-shield">🛡️</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== OVERLAY PAUSE ===== -->
+  <div id="overlay-pause" class="overlay hidden">
+    <div class="overlay-box">
+      <h2>⏸ PAUSE</h2>
+      <button class="btn-menu" id="btn-resume">▶ Lanjut</button>
+      <button class="btn-menu" id="btn-menu-from-pause">🏠 Menu Utama</button>
+    </div>
+  </div>
+
+  <!-- ===== OVERLAY GAME OVER ===== -->
+  <div id="overlay-gameover" class="overlay hidden">
+    <div class="overlay-box gameover-box">
+      <h2>💀 GAME OVER</h2>
+      <p id="go-score-text">Skor Akhir: <span id="go-score">0</span></p>
+      <p id="go-coins-text">Koin: <span id="go-coins">0</span></p>
+      <button class="btn-menu" id="btn-retry">🔄 Coba Lagi</button>
+      <button class="btn-menu" id="btn-menu-from-go">🏠 Menu Utama</button>
+    </div>
+  </div>
+
+  <!-- ===== OVERLAY LEVEL CLEAR ===== -->
+  <div id="overlay-levelclear" class="overlay hidden">
+    <div class="overlay-box clear-box">
+      <h2 id="lc-title">🎉 LEVEL CLEAR!</h2>
+      <p>Skor: <span id="lc-score">0</span></p>
+      <p>Koin: <span id="lc-coins">0</span></p>
+      <button class="btn-menu" id="btn-next-level">▶ Level Berikutnya</button>
+      <button class="btn-menu" id="btn-menu-from-lc">🏠 Menu Utama</button>
+    </div>
+  </div>
+
+  <!-- ===== OVERLAY WIN ===== -->
+  <div id="overlay-win" class="overlay hidden">
+    <div class="overlay-box win-box">
+      <h2>🏆 KAMU MENANG!</h2>
+      <p>Semua level selesai! Luar biasa!</p>
+      <p>Skor Total: <span id="win-score">0</span></p>
+      <p>Koin Total: <span id="win-coins">0</span></p>
+      <button class="btn-menu" id="btn-play-again">🔄 Main Lagi</button>
+      <button class="btn-menu" id="btn-menu-from-win">🏠 Menu Utama</button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
